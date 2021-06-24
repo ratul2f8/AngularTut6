@@ -1,0 +1,162 @@
+<nav>
+  <ul class="pagination">
+    <li class="page-item" [class]="currentPage === 0 ? 'disabled' : ''">
+      <a class="page-link" href="#" (click)="handleClickOnPrevious()">
+        Previous
+      </a>
+    </li>
+    <ng-container *ngFor="let image of images; let i = index">
+      <li
+        class="page-item"
+        [ngClass]="{ active: i === currentPage }"
+        *ngIf="checkWindowIndex(i)"
+      >
+        <a href="#" class="page-link" (click)="currentPage = i">{{ i + 1 }}</a>
+      </li>
+    </ng-container>
+
+    <li
+      class="page-item"
+      [ngClass]="{ disabled: currentPage === images.length - 1 }"
+    >
+      <a class="page-link" href="#" (click)="handleClickOnNext()"> Next </a>
+    </li>
+  </ul>
+</nav>
+<div>
+  <h2>{{ images[currentPage].title }}</h2>
+  <img [src]="images[currentPage].url" />
+</div>
+<div [ngSwitch]="currentPage">
+  <div *ngSwitchCase="0">You are in the first page</div>
+  <div *ngSwitchCase="images.length - 1">You are in the last page</div>
+  <div *ngSwitchDefault>There are more pages to explore</div>
+</div>
+<div
+  appClass
+  style="
+    height: 100px;
+    padding: 1em;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  "
+>
+  <h4>This is a custom diretive</h4>
+</div>
+
+<!-- custom directives with params -->
+<div
+  appClassWithParams
+  [bgColor]="'r'"
+  style="
+    height: 100px;
+    padding: 1em;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  "
+>
+  <h4>
+    This is a custom diretive with params<sub>&nbsp;passed red color param</sub>
+  </h4>
+</div>
+<div
+  appClassWithParams
+  [bgColor]="'y'"
+  style="
+    height: 100px;
+    padding: 1em;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  "
+>
+  <h4>
+    This is a custom diretive with params<sub
+      >&nbsp;passed yellow color param</sub
+    >
+  </h4>
+</div>
+<div
+  appClassWithParams
+  style="
+    height: 100px;
+    padding: 1em;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  "
+>
+  <h4>
+    This is a custom diretive with params<sub>&nbsp;didn't pass anything</sub>
+  </h4>
+</div>
+<div
+  appClassWithParams
+  [bgColor]="'something not present in switch'"
+  style="
+    height: 100px;
+    padding: 1em;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  "
+>
+  <h4>
+    This is a custom diretive with params<sub
+      >&nbsp;passed something not allowed</sub
+    >
+  </h4>
+</div>
+
+<h6>Refactoring [ngClass]</h6>
+<button
+  type="button"
+  appClassNames
+  (click)="showAlert()"
+  [appClasses]="{ disabled: true }"
+  class="btn btn-primary disabled"
+>
+  Button
+</button>
+<button
+  type="button"
+  appClassNames
+  [appClasses]="{ disabled: false }"
+  class="btn btn-primary disabled"
+  (click)="showAlert()"
+>
+  Button
+</button>
+
+<h6>Custome structural directives</h6>
+<ul *appTimes="5">
+  <li>Hello world!</li>
+</ul>
+<h6>Custome structural directives with properties for aliasing</h6>
+<nav>
+  <ul class="pagination">
+    <li class="page-item" [class]="currentPage === 0 ? 'disabled' : ''">
+      <a class="page-link" href="#" (click)="handleClickOnPrevious()">
+        Previous
+      </a>
+    </li>
+    <ng-container *appTimesVariant2="images.length; let i = index">
+      <li
+        class="page-item"
+        [ngClass]="{ active: i === currentPage }"
+        *ngIf="checkWindowIndex(i)"
+      >
+        <a href="#" class="page-link" (click)="currentPage = i">{{ i + 1 }}</a>
+      </li>
+    </ng-container>
+
+    <li
+      class="page-item"
+      [ngClass]="{ disabled: currentPage === images.length - 1 }"
+    >
+      <a class="page-link" href="#" (click)="handleClickOnNext()"> Next </a>
+    </li>
+  </ul>
+</nav>
